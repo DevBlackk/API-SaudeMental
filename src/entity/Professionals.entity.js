@@ -1,4 +1,4 @@
-import { DataTypes, Sequelize } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../database/connection.js";
 
 const User = sequelize.define("User", {
@@ -16,6 +16,16 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     allowNull: true,
     unique: true,
+  },
+  office: {
+    type: DataTypes.ENUM(
+      "Psiquiatra",
+      "Psicólogo",
+      "Terapeuta",
+      "Conselheiro",
+      "Enfermeiro",
+      "Assistente Social"
+    ),
   },
   email: {
     type: DataTypes.STRING,

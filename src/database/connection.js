@@ -1,6 +1,8 @@
 import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize('postgresql://davidsonwferreira8:hF72LIJDwKXY@ep-flat-dream-a515pcbg.us-east-2.aws.neon.tech/API-SaudeMental?sslmode=require')
+const sequelize = new Sequelize(
+  "postgresql://davidsonwferreira8:hF72LIJDwKXY@ep-flat-dream-a515pcbg.us-east-2.aws.neon.tech/API-SaudeMental?sslmode=require"
+);
 async function testConnection() {
   try {
     await sequelize.authenticate();
