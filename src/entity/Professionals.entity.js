@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/connection.js";
 
-const User = sequelize.define("User", {
+const Professionals = sequelize.define("Professional", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -39,4 +39,4 @@ const User = sequelize.define("User", {
   updatedAt: true,
 });
 
-export { User };
+export { Professionals };
