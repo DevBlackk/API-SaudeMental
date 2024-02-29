@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/connection.js";
 import { User } from "./User.entity.js"
-import { Therapist } from "./Therapist.entity.js"
 
 const Appointment = sequelize.define("Appointment", {
   id: {
@@ -26,12 +25,9 @@ const Appointment = sequelize.define("Appointment", {
   updatedAt: true,
 });
 
-Appointment.hasMany(User, {
-  foreignKey: 'user_id'
-})
-
-Appointment.hasMany(Therapist, {
-  foreignKey: 'therapist_id'
+Appointment.belongsTo(User, {
+  constraint: true,
+  foreignKey: 'appointment_id'
 })
 
 export { Appointment };
