@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../database/connection.js";
-import {} from "./UserReview.entity.js"
+import { sequelize } from "../config/connection.js";
 
 const Review = sequelize.define("Review", {
   id: {
@@ -15,12 +14,30 @@ const Review = sequelize.define("Review", {
   comment: {
     type: DataTypes.TEXT
   },
-  createdAt: true,
-  updatedAt: true,
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'Users', 
+      key: 'id' 
+    }
+  },
+  therapistId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'Therapists', 
+      key: 'id' 
+    }
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
 });
-
-// Review.hasMany(Appointment, {
-//   foreignKey: 'appointment_id'
-// })
 
 export { Review };

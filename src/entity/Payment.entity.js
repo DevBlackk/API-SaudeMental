@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../database/connection.js";
-import { Appointment } from "./Appointment.entity.js"
+import { sequelize } from "../config/connection.js";
 
 const Payment = sequelize.define("Payment", {
   id: {
@@ -20,8 +19,22 @@ const Payment = sequelize.define("Payment", {
   date: {
     type: DataTypes.DATE
   },
-  createdAt: true,
-  updatedAt: true,
+  appointmentId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'Appointments', 
+      key: 'id' 
+    }
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
 });
 
 export { Payment };

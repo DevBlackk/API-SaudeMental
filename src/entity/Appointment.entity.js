@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../database/connection.js";
+import { sequelize } from "../config/connection.js";
 import { User } from "./User.entity.js"
 
 const Appointment = sequelize.define("Appointment", {
@@ -18,16 +18,33 @@ const Appointment = sequelize.define("Appointment", {
     allowNull: true,
   },
   status: {
-    type: DataTypes.ENUM('pending', 'Confirmed', 'Cancelled'),
+    type: DataTypes.ENUM('Pending', 'Confirmed', 'Cancelled'),
     defaultValue: 'Pending'
   },
-  createdAt: true,
-  updatedAt: true,
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'Users', 
+      key: 'id' 
+    }
+  },
+  therapistId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'Therapists', 
+      key: 'id' 
+    }
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
 });
-
-Appointment.belongsTo(User, {
-  constraint: true,
-  foreignKey: 'appointment_id'
-})
 
 export { Appointment };

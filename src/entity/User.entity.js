@@ -1,9 +1,5 @@
-import { DataTypes, Sequelize } from "sequelize";
-import { sequelize } from "../database/connection.js";
-import { Therapist } from "./Therapist.entity.js";
-import { Appointment } from "./Appointment.entity.js";
-import { Review } from "./Review.entity.js";
-import { UserReview } from "./UserReview.entity.js";
+import { DataTypes } from "sequelize";
+import { sequelize } from "../config/connection.js";
 
 const User = sequelize.define("User", {
   id: {
@@ -29,33 +25,17 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING
   },
   accountType: {
-    type: DataTypes.ENUM('User', "Therapist"),
+    type: DataTypes.ENUM('User', 'Therapist'),
     defaultValue: 'User'
   },
-  createdAt: true,
-  updatedAt: true,
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
 });
-
-User.hasMany(Therapist, {
-  foreignKey: 'user_id'
-})
-
-User.hasMany(Appointment, {
-  foreignKey: 'user_id'
-})
-
-User.belongsToMany(Review, {
-  through: {
-    model: UserReview
-  },
-  foreignKey: 'review_id'
-})
-
-Review.belongsToMany(User, {
-  through: {
-    model: UserReview
-  },
-  foreignKey: 'review_id'
-})
 
 export { User };

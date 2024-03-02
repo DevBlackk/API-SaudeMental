@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../database/connection.js";
-import { Appointment } from "./Appointment.entity.js";
+import { sequelize } from "../config/connection.js";
 
 const Therapist = sequelize.define("Therapist", {
   id: {
@@ -9,28 +8,30 @@ const Therapist = sequelize.define("Therapist", {
     primaryKey: true,
     allowNull: false,
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    unique: true
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
   licenseNumber: { 
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    defaultValue: null
   },
-  createdAt: true,
-  updatedAt: true,
+  medicalSpecialty: {
+    type: DataTypes.STRING,
+    defaultValue: null
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'Users',
+      key: 'id'
+    }
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
 });
-
-Therapist.hasMany(Appointment, {
-  foreignKey: 'therapistId'
-})
 
 export { Therapist };
