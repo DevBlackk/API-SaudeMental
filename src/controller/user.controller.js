@@ -1,85 +1,102 @@
-import { User } from "../entity/User.entity";
+import bcrypt from "bcrypt";
+import { UserService } from "../services/user.service.js";
 
-const router = Router();
+class UserController extends UserService {
+  constructor() {
+    super();
+  }
 
-router.post('/signup', async (req, res) => {
+  async createUser(request, response) {
     try {
-        const existingUser = await User.findOne({ username: req.body.username });
-
-        if (existingUser) {
-            console.log('Username already in use');
-            return res.status(503).send('Username already in use');
-        }
-
-        const user = new User(req.body);
-
-        if (!user.validate()) {
-            return res.status(406).send('Invalid data');
-        }
-        await user.save();
-        res.json({ message: 'Successfully signed up!' });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
+      const { name, email, password, phone, accountType } = request.body;
+      const hashedPassword = await bcrypt.hash(password, 10);
+      response.status(201).json({
+        message: "User created successfully",
+        results: [
+          await super.newUser(name, email, hashedPassword, phone, accountType),
+        ],
+        error: false,
+      });
+    } catch (error) {
+      response.status(401).json({
+        message: error.message,
+        error: true,
+      });
     }
-});
+  }
 
-router.get('/users', async (req, res) => {
+  async loginUser(request, response) {
     try {
-        const users = await User.find();
-        res.json(users);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
+      const { email, password } = request.body;
+      const user = await super.validationUser(email);
+      if (!user) throw new Error("User not found");
+      if (await bcrypt.compare(password, user.password)) {
+        response.json({
+          message: "Login successfully",
+          token: await super.generatorToken(email, password),
+          error: false,
+        });
+      } else {
+        throw new Error("User or password invalid");
+      }
+    } catch (error) {
+      response.json({
+        message: error.message,
+        error: true,
+      });
     }
-});
+  }
 
-
-router.get('/users/:id', async (req, res) => {
+  async listUsers(request, response) {
     try {
-        const user = await User.findById(req.params.id);
-
-        if (!user) {
-            return res.status(404).send('User not found');
-        }
-        res.json(user);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
+      response.status(200).json({
+        results: await super.getAllUsers(),
+        error: false,
+      });
+    } catch (error) {
+      response.status(401).json({
+        message: error.message,
+        error: true,
+      });
     }
-});
+  }
 
-router.put('/users/:id', async (req, res) => {
+  async updateUser(request, response) {
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-
-        if (!user) {
-            return res.status(404).send('User not found');
-        }
-
-        res.json(user);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
+      const id = request.params.id;
+      console.log(id)
+      const { name, email, password, phone } = request.body;
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const oldUser = await super.oldUser(id);
+      await super.updateUser(id, name, email, hashedPassword, phone, oldUser)
+      response.status(200).json({
+        message: "User update successfully",
+        results: [],
+        error: false,
+      });
+    } catch (error) {
+      response.status(401).json({
+        message: error.message,
+        error: true,
+      });
     }
-});
+  }
 
-router.delete('/users/:id', async (req, res) => {
+  async deleteUser(request, response) {
     try {
-        const user = await User.findByIdAndDelete(req.params.id);
-
-        if (!user) {
-            return res.status(404).send('User not found');
-        }
-
-        res.json({ message: 'User deleted successfully' });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
+      const { id } = request.params;
+      response.status(200).json({
+        message: "User delete successfully",
+        results: await super.deleteUser(id),
+        error: false,
+      });
+    } catch (error) {
+      response.status(401).json({
+        message: error.message,
+        error: true,
+      });
     }
-});
+  }
+}
 
-export default router;
-
-
-
+export { UserController };
