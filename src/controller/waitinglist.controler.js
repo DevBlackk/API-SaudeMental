@@ -1,4 +1,3 @@
-
 import { WaitingListService } from "../services/waitinglist.service.js";
 
 class WaitingListController extends WaitingListService {
@@ -9,11 +8,10 @@ class WaitingListController extends WaitingListService {
   async addToWaitingList(request, response) {
     try {
       const { userId, therapistId, reason } = request.body;
+      const newItem = await super.addToWaitingList(userId, therapistId, reason);
       response.status(201).json({
         message: "User added to waiting list successfully",
-        results: [
-          await super.addToWaitingList(userId, therapistId, reason),
-        ],
+        results: [newItem],
         error: false,
       });
     } catch (error) {
@@ -26,8 +24,9 @@ class WaitingListController extends WaitingListService {
 
   async listWaitingList(request, response) {
     try {
+      const waitingList = await super.listWaitingList();
       response.status(200).json({
-        results: await super.listWaitingList(),
+        results: waitingList,
         error: false,
       });
     } catch (error) {
@@ -41,8 +40,9 @@ class WaitingListController extends WaitingListService {
   async getWaitingListById(request, response) {
     try {
       const waitingListId = request.params.id;
+      const waitingListItem = await super.getWaitingListById(waitingListId);
       response.status(200).json({
-        results: await super.getWaitingListById(waitingListId),
+        results: waitingListItem,
         error: false,
       });
     } catch (error) {
