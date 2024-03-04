@@ -3,6 +3,8 @@ import { testConnection } from "./config/connection.js";
 import { routes } from "./routes/user.route.js";
 import { dbSync } from "./config/dbSync.js";
 import { therapistRouter } from "./routes/therapist.route.js";
+import { appointmentRouter } from "./routes/appointment.route.js";
+import { reviewRouter } from "./routes/review.route.js";
 import {
   corsMiddleware,
   jsonMiddleware,
@@ -14,6 +16,8 @@ app.use(jsonMiddleware);
 app.use(corsMiddleware);
 app.use("/user", routes);
 app.use('/therapists', therapistRouter);
+app.use('/appointments', appointmentRouter);
+app.use('/reviews', reviewRouter);
 app.use(dbSync);
 
 app.listen(3333, () => {
