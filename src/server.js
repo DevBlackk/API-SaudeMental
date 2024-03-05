@@ -12,6 +12,8 @@ import {
 
 const app = express();
 
+const port = process.env.PORT || 3333
+
 app.use(jsonMiddleware);
 app.use(corsMiddleware);
 app.use("/user", useRoutes);
@@ -20,6 +22,6 @@ app.use('/appointments', appointmentRouter);
 app.use('/reviews', reviewRouter);
 app.use(dbSync);
 
-app.listen(3333, () => {
+app.listen(port, () => {
   testConnection(), console.log("server on in port 3333!");
 });
