@@ -52,3 +52,7 @@ Esteja você se sentindo um pouco para baixo ou precisando de um impulso para en
 ## Conclusão
 
 Em essência, a ideia é simples: oferecer tratamentos, acompanhamentos e suporte quando necessário, tornando a jornada diária um pouco mais leve e lembrando a todos que, mesmo diante dos desafios, há sempre espaço para otimismo e motivação.
+
+---
+
+### Se quiser usar [teste aqui.](https://api-saudemental.onrender.com)
