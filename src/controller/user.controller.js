@@ -47,7 +47,7 @@ class UserController extends UserService {
     }
   }
 
-  async listUsers(request, response) {
+  async listUsers(request, response, next) {
     try {
       response.status(200).json({
         results: await super.getAllUsers(),

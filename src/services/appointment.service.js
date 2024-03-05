@@ -40,3 +40,5 @@ class AppointmentService {
     });
   }
 }
+
+export { AppointmentService }

@@ -13,11 +13,7 @@ export function ensureAuthenticated(request, response, next) {
 
   try {
     jsonwebtoken.verify(token, "34aa582c-d6d0-4a4f-9472-6702c5dbd2ec")
-
-    response.status(200).json({
-      message: "Token valid",
-      error: false
-    })
+    next()
   } catch (error) {
     return response.status(401).json({
       message: "Token invalid"

@@ -1,6 +1,6 @@
 import express from "express";
 import { testConnection } from "./config/connection.js";
-import { routes } from "./routes/user.route.js";
+import { useRoutes } from "./routes/user.route.js";
 import { dbSync } from "./config/dbSync.js";
 import { therapistRouter } from "./routes/therapist.route.js";
 import { appointmentRouter } from "./routes/appointment.route.js";
@@ -14,7 +14,7 @@ const app = express();
 
 app.use(jsonMiddleware);
 app.use(corsMiddleware);
-app.use("/user", routes);
+app.use("/user", useRoutes);
 app.use('/therapists', therapistRouter);
 app.use('/appointments', appointmentRouter);
 app.use('/reviews', reviewRouter);

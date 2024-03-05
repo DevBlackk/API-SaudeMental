@@ -2,15 +2,15 @@ import { Router } from "express";
 import { UserController } from "../controller/user.controller.js";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticate.js";
 
-const routes = Router()
+const useRoutes = Router()
 
 const user = new UserController
 
-routes.post('/', user.createUser)
-routes.post('/authenticate', ensureAuthenticated)
-routes.post('/login', user.loginUser)
-routes.get('/', user.listUsers)
-routes.put('/:id', user.updateUser)
-routes.delete('/:id', user.deleteUser)
+useRoutes.post('/', user.createUser)
+useRoutes.post('/authenticate', ensureAuthenticated)
+useRoutes.post('/login', user.loginUser)
+useRoutes.get('/', ensureAuthenticated, user.listUsers)
+useRoutes.put('/:id', user.updateUser)
+useRoutes.delete('/:id', user.deleteUser)
 
-export { routes }
+export { useRoutes }
