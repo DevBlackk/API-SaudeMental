@@ -4,7 +4,11 @@ import jsonwebtoken from "jsonwebtoken";
 
 class UserService {
   async getAllUsers() {
-    return await User.findAll();
+    return await User.findAll({
+      attributes: {
+        exclude: ["password"]
+      }
+    });
   }
 
   async newUser(name, email, hashedPassword, phone, accountType) {
