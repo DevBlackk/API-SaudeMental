@@ -39,8 +39,12 @@ class WaitingListController extends WaitingListService {
 
   async getWaitingListById(request, response) {
     try {
-      const waitingListId = request.params.id;
-      const waitingListItem = await super.getWaitingListById(waitingListId);
+      const { id } = request.params.id;
+      const waitingListItem = await super.getWaitingListById({
+        where: {
+          id,
+        },
+      });
       response.status(200).json({
         results: waitingListItem,
         error: false,
@@ -55,12 +59,11 @@ class WaitingListController extends WaitingListService {
 
   async updateWaitingList(request, response) {
     try {
-      const waitingListId = request.params.id;
-      const { therapistId, reason } = request.body;
-      await super.updateWaitingList(waitingListId, therapistId, reason);
+      const { id } = request.params.id;
+      const { status } = request.body;
       response.status(200).json({
         message: "Waiting list item updated successfully",
-        results: [],
+        results: await super.updateWaitingList(id, status),
         error: false,
       });
     } catch (error) {
@@ -73,11 +76,10 @@ class WaitingListController extends WaitingListService {
 
   async removeFromWaitingList(request, response) {
     try {
-      const waitingListId = request.params.id;
-      await super.removeFromWaitingList(waitingListId);
+      const { id } = request.params.id;
       response.status(200).json({
         message: "Waiting list item removed successfully",
-        results: [],
+        results: await super.removeFromWaitingList(id),
         error: false,
       });
     } catch (error) {

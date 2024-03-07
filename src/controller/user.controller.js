@@ -8,13 +8,11 @@ class UserController extends UserService {
 
   async createUser(request, response) {
     try {
-      const { name, email, password, phone, accountType } = request.body;
+      const { username, password, accountType } = request.body;
       const hashedPassword = await bcrypt.hash(password, 10);
       response.status(201).json({
         message: "User created successfully",
-        results: [
-          await super.newUser(name, email, hashedPassword, phone, accountType),
-        ],
+        results: [await super.newUser(username, hashedPassword, accountType,)],
         error: false,
       });
     } catch (error) {
@@ -27,13 +25,13 @@ class UserController extends UserService {
 
   async loginUser(request, response) {
     try {
-      const { email, password } = request.body;
-      const user = await super.validationUser(email);
+      const { username, password } = request.body;
+      const user = await super.validationUser(username);
       if (!user) throw new Error("User not found");
       if (await bcrypt.compare(password, user.password)) {
         response.json({
           message: "Login successfully",
-          token: await super.generatorToken(email, password),
+          token: await super.generatorToken(username, password),
           error: false,
         });
       } else {
@@ -65,10 +63,10 @@ class UserController extends UserService {
     try {
       const id = request.params.id;
       console.log(id)
-      const { name, email, password, phone } = request.body;
+      const { username, password,  } = request.body;
       const hashedPassword = await bcrypt.hash(password, 10);
       const oldUser = await super.oldUser(id);
-      await super.updateUser(id, name, email, hashedPassword, phone, oldUser)
+      await super.updateUser(id, username, hashedPassword, oldUser)
       response.status(200).json({
         message: "User update successfully",
         results: [],

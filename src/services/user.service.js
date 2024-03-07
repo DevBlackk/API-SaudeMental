@@ -11,20 +11,18 @@ class UserService {
     });
   }
 
-  async newUser(name, email, hashedPassword, phone, accountType) {
+  async newUser(username, hashedPassword, accountType) {
     return await User.create({
-      name: name,
-      email: email,
+      username,
       password: hashedPassword,
-      phone: phone,
-      accountType: accountType,
+      accountType,
     });
   }
 
-  async validationUser(email) {
+  async validationUser(username) {
     return await User.findOne({
       where: {
-        email: email,
+        username
       },
     });
   }
@@ -33,13 +31,11 @@ class UserService {
     return await User.findByPk(id);
   }
 
-  async updateUser(id, name, email, hashedPassword, phone, oldUser) {
+  async updateUser(id, username, hashedPassword, oldUser) {
     return await User.update(
       {
-        name: name || oldUser.name,
-        email: email || oldUser.email,
+        username: username || oldUser.username,
         password: hashedPassword || oldUser.password,
-        phone: phone || oldUser.phone,
       },
       {
         where: {
@@ -52,15 +48,15 @@ class UserService {
   async deleteUser(id) {
     return await User.destroy({
       where: {
-        id: id,
+        id
       },
     });
   }
 
-  async generatorToken(email, password) {
+  async generatorToken(username, password) {
     const userAlreadyExist = await User.findOne({
       where: {
-        email,
+        username,
       },
     });
     if (!userAlreadyExist) {

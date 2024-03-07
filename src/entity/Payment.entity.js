@@ -9,23 +9,12 @@ const Payment = sequelize.define("Payment", {
     allowNull: false,
   },
   amount: {
-    type: DataTypes.DECIMAL(10, 2),
+    type: DataTypes.DECIMAL(5, 2),
     allowNull: false
   },
   method: {
     type: DataTypes.STRING,
     allowNull: false
-  },
-  date: {
-    type: DataTypes.DATE
-  },
-  appointmentId: {
-    type: DataTypes.UUID,
-    allowNull: false,
-    references: {
-      model: 'Appointments', 
-      key: 'id' 
-    }
   },
   createdAt: {
     type: DataTypes.DATE,

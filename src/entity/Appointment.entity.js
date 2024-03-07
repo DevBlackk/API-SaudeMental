@@ -13,19 +13,15 @@ const Appointment = sequelize.define("Appointment", {
     type: DataTypes.DATE,
     allowNull: true,
   },
-  time: {
+  hour: {
     type: DataTypes.TIME,
     allowNull: true,
   },
-  status: {
-    type: DataTypes.ENUM('Pending', 'Confirmed', 'Cancelled'),
-    defaultValue: 'Pending'
-  },
-  userId: {
+  clientId: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Users', 
+      model: 'Clients', 
       key: 'id' 
     }
   },
@@ -37,6 +33,15 @@ const Appointment = sequelize.define("Appointment", {
       key: 'id' 
     }
   },
+  waitingListId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'WaitingLists', 
+      key: 'id' 
+    }
+  },
+
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false

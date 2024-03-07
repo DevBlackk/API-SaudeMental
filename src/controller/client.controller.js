@@ -1,21 +1,20 @@
-import { TherapistService } from "../services/therapist.service.js";
+import { ClientService } from "../services/client.service.js";
 
-class TherapistController extends TherapistService {
+class ClientController extends ClientService {
   constructor() {
     super();
   }
 
-  async createTherapist(req, res) {
+  async createClient(req, res) {
     try {
-      const { name, phone, licenseNumber, medicalSpecialty } = req.body;
+      const { name, phone, document } = req.body;
 
       res.status(201).json({
-        message: "Therapist created successfully",
-        results: await super.createTherapist(
+        message: "Client created successfully",
+        results: await super.createClient(
           name,
           phone,
-          licenseNumber,
-          medicalSpecialty
+          document
         ),
         error: false,
       });
@@ -27,10 +26,10 @@ class TherapistController extends TherapistService {
     }
   }
 
-  async listTherapists(req, res) {
+  async listClient(req, res) {
     try {
       res.status(200).json({
-        results: await super.getAllTherapists(),
+        results: await super.getAllClients(),
         error: false,
       });
     } catch (error) {
@@ -41,25 +40,24 @@ class TherapistController extends TherapistService {
     }
   }
 
-  async updateTherapist(req, res) {
+  async updateClient(req, res) {
     try {
       const id = req.params.id;
-      const { name, phone, licenseNumber, medicalSpecialty } = req.body;
+      const { name, phone, document } = req.body;
 
-      const [updatedRowsCount] = await super.updateTherapist(
+      const [updatedRowsCount] = await super.updateClient(
         id,
         name, 
         phone,
-        licenseNumber,
-        medicalSpecialty
+        document
       );
 
       if (updatedRowsCount === 0) {
-        throw new Error("Therapist not found");
+        throw new Error("Client not found");
       }
 
       res.status(200).json({
-        message: "Therapist updated successfully",
+        message: "Client updated successfully",
         results: updatedRowsCount,
         error: false,
       });
@@ -71,12 +69,12 @@ class TherapistController extends TherapistService {
     }
   }
 
-  async deleteTherapist(req, res) {
+  async deleteClient(req, res) {
     try {
       const { id } = req.params;
       res.status(200).json({
-        message: "Therapist deleted successfully",
-        results: await super.deleteTherapist(id),
+        message: "Client deleted successfully",
+        results: await super.deleteClient(id),
         error: false,
       });
     } catch (error) {
@@ -88,4 +86,4 @@ class TherapistController extends TherapistService {
   }
 }
 
-export { TherapistController };
+export { ClientController };

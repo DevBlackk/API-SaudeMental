@@ -1,25 +1,20 @@
 import { Router } from "express";
-import { WaitingListController } from "../controller/waitingList.controller.js";
-import { ensureAuthenticated } from "../middlewares/ensureAuthenticate.js"; 
-const routes = Router(); 
+import { WaitingListController } from "../controller/waitinglist.controler.js";
+const waitingListRoutes = Router(); 
 
 const waitingList = new WaitingListController(); 
 
 
 
-// Rota para adicionar um novo item à lista de espera
-routes.post('/', ensureAuthenticated, waitingList.addToWaitingList);
 
-// Rota para listar todos os itens na lista de espera
-routes.get('/', ensureAuthenticated, waitingList.listWaitingList);
+waitingListRoutes.post('/', waitingList.addToWaitingList);
 
-// Rota para obter detalhes de um item específico na lista de espera
-routes.get('/:id', ensureAuthenticated, waitingList.getWaitingListById);
+waitingListRoutes.get('/', waitingList.listWaitingList);
 
-// Rota para atualizar um item na lista de espera
-routes.put('/:id', ensureAuthenticated, waitingList.updateWaitingList);
+waitingListRoutes.get('/:id', waitingList.getWaitingListById);
 
-// Rota para remover um item da lista de espera
-routes.delete('/:id', ensureAuthenticated, waitingList.removeFromWaitingList);
+waitingListRoutes.put('/:id', waitingList.updateWaitingList);
 
-export { routes };
+waitingListRoutes.delete('/:id', waitingList.removeFromWaitingList);
+
+export { waitingListRoutes };

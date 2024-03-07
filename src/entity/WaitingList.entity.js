@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/connection.js";
-import { User } from "./User.entity.js";
 
 const WaitingList = sequelize.define("WaitingList", {
   id: {
@@ -9,25 +8,9 @@ const WaitingList = sequelize.define("WaitingList", {
     primaryKey: true,
     allowNull: false,
   },
-  dateAdded: {
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  userId: {
-    type: DataTypes.UUID,
-    allowNull: false,
-    references: {
-      model: 'Users', 
-      key: 'id' 
-    }
-  },
-  therapistId: {
-    type: DataTypes.UUID,
-    allowNull: false,
-    references: {
-      model: 'Therapists', 
-      key: 'id' 
-    }
+  status: {
+    type: DataTypes.ENUM('Pending', 'Confirmed', 'Cancelled'),
+    defaultValue: 'Pending'
   },
   createdAt: {
     type: DataTypes.DATE,

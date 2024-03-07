@@ -8,6 +8,14 @@ const Therapist = sequelize.define("Therapist", {
     primaryKey: true,
     allowNull: false,
   },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   licenseNumber: { 
     type: DataTypes.STRING,
     defaultValue: null
@@ -16,12 +24,11 @@ const Therapist = sequelize.define("Therapist", {
     type: DataTypes.STRING,
     defaultValue: null
   },
-  userId: {
+  paymentId: {
     type: DataTypes.UUID,
-    allowNull: false,
     references: {
-      model: 'Users',
-      key: 'id'
+      model: "Payments",
+      key: "id"
     }
   },
   createdAt: {

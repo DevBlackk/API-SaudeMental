@@ -8,25 +8,17 @@ const User = sequelize.define("User", {
     primaryKey: true,
     allowNull: false,
   },
-  name: {
+  username: {
     type: DataTypes.STRING,
-    allowNull: true,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    unique: true
+    allowNull: true
   },
   password: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  phone: {
-    type: DataTypes.STRING
-  },
   accountType: {
-    type: DataTypes.ENUM('User', 'Therapist'),
-    defaultValue: 'User'
+    type: DataTypes.ENUM('Client', 'Therapist'),
+    defaultValue: 'Client'
   },
   createdAt: {
     type: DataTypes.DATE,
