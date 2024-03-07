@@ -1,45 +1,44 @@
 import { WaitingList } from "../entity/WaitingList.entity.js";
 
 class WaitingListService {
-    //adiciona item lista de espera
-  async addToWaitingList(userId, therapistId, reason) {
+  async addToWaitingList(therapistId, reason) {
     return await WaitingList.create({
-      userId: userId,
       therapistId: therapistId,
-      reason: reason
+      reason: reason,
     });
   }
 
-  // mostra a lista de espera
   async listWaitingList() {
     return await WaitingList.findAll();
   }
 
-  async getWaitingListById(waitingListId) {
-    return await WaitingList.findByPk(waitingListId);
-  }
-  
-// atualiza a lista de espera
-  async updateWaitingList(waitingListId, therapistId, reason) {
-    const waitingListItem = await WaitingList.findByPk(waitingListId);
-    if (!waitingListItem) {
-      throw new Error("Item na lista de espera não encontrado.");
-    }
-
-    return await waitingListItem.update({
-      therapistId: therapistId || waitingListItem.therapistId,
-      reason: reason || waitingListItem.reason
+  async getWaitingListById(id) {
+    return await WaitingList.findByPk({
+      where: {
+        id,
+      },
     });
   }
 
-  //remove item da lista de esepera
-  async removeFromWaitingList(waitingListId) {
-    const waitingListItem = await WaitingList.findByPk(waitingListId);
-    if (!waitingListItem) {
-      throw new Error("Item na lista de espera não encontrado.");
-    }
+  async updateWaitingList(id, status) {
+    return await WaitingList.update(
+      {
+        status,
+      },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+  }
 
-    await waitingListItem.destroy();
+  async removeFromWaitingList(id) {
+    return await WaitingList.destroy({
+      where: {
+        id,
+      },
+    });
   }
 }
 

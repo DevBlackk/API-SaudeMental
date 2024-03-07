@@ -1,24 +1,16 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/connection.js";
 
-const User = sequelize.define("User", {
+const WaitingList = sequelize.define("WaitingList", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
     allowNull: false,
   },
-  username: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  accountType: {
-    type: DataTypes.ENUM('Client', 'Therapist'),
-    defaultValue: 'Client'
+  status: {
+    type: DataTypes.ENUM('Pending', 'Confirmed', 'Cancelled'),
+    defaultValue: 'Pending'
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -30,4 +22,4 @@ const User = sequelize.define("User", {
   },
 });
 
-export { User };
+export { WaitingList }

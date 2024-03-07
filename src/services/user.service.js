@@ -4,23 +4,25 @@ import jsonwebtoken from "jsonwebtoken";
 
 class UserService {
   async getAllUsers() {
-    return await User.findAll();
-  }
-
-  async newUser(name, email, hashedPassword, phone, accountType) {
-    return await User.create({
-      name: name,
-      email: email,
-      password: hashedPassword,
-      phone: phone,
-      accountType: accountType,
+    return await User.findAll({
+      attributes: {
+        exclude: ["password"]
+      }
     });
   }
 
-  async validationUser(email) {
+  async newUser(username, hashedPassword, accountType) {
+    return await User.create({
+      username,
+      password: hashedPassword,
+      accountType,
+    });
+  }
+
+  async validationUser(username) {
     return await User.findOne({
       where: {
-        email: email,
+        username
       },
     });
   }
@@ -29,13 +31,11 @@ class UserService {
     return await User.findByPk(id);
   }
 
-  async updateUser(id, name, email, hashedPassword, phone, oldUser) {
+  async updateUser(id, username, hashedPassword, oldUser) {
     return await User.update(
       {
-        name: name || oldUser.name,
-        email: email || oldUser.email,
+        username: username || oldUser.username,
         password: hashedPassword || oldUser.password,
-        phone: phone || oldUser.phone,
       },
       {
         where: {
@@ -48,15 +48,15 @@ class UserService {
   async deleteUser(id) {
     return await User.destroy({
       where: {
-        id: id,
+        id
       },
     });
   }
 
-  async generatorToken(email, password) {
+  async generatorToken(username, password) {
     const userAlreadyExist = await User.findOne({
       where: {
-        email,
+        username,
       },
     });
     if (!userAlreadyExist) {

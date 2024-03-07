@@ -1,8 +1,10 @@
 import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
 
-const sequelize = new Sequelize(
-  "postgresql://davidsonwferreira8:hF72LIJDwKXY@ep-flat-dream-a515pcbg.us-east-2.aws.neon.tech/API-SaudeMental?sslmode=require"
-);
+dotenv.config()
+
+const sequelize = new Sequelize('postgresql://davidsonwferreira8:hF72LIJDwKXY@ep-flat-dream-a515pcbg.us-east-2.aws.neon.tech/api_saudemental?sslmode=require');
+
 async function testConnection() {
   try {
     await sequelize.authenticate();

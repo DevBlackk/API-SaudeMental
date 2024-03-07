@@ -1,24 +1,31 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/connection.js";
 
-const User = sequelize.define("User", {
+const Client = sequelize.define("Client", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
     allowNull: false,
   },
-  username: {
+  name: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   },
-  password: {
+  phone: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false
   },
-  accountType: {
-    type: DataTypes.ENUM('Client', 'Therapist'),
-    defaultValue: 'Client'
+  document: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  userId: {
+    type: DataTypes.UUID,
+    references: {
+      model: "Users",
+      key: "id"
+    }
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -30,4 +37,4 @@ const User = sequelize.define("User", {
   },
 });
 
-export { User };
+export { Client };
