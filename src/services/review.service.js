@@ -5,22 +5,18 @@ class ReviewService {
     return await Review.findAll();
   }
 
-  async createReview(rating, comment, userId, therapistId) {
+  async createReview(rating, comment) {
     return await Review.create({
       rating,
       comment,
-      userId,
-      therapistId,
     });
   }
 
-  async updateReview(id, rating, comment, userId, therapistId) {
+  async updateReview(id, rating, comment) {
     return await Review.update(
       {
         rating,
         comment,
-        userId,
-        therapistId,
       },
       {
         where: {

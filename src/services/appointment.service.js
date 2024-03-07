@@ -5,24 +5,18 @@ class AppointmentService {
     return await Appointment.findAll();
   }
 
-  async createAppointment(date, time, status, userId, therapistId) {
+  async createAppointment(date, hour) {
     return await Appointment.create({
       date,
-      time,
-      status,
-      userId,
-      therapistId,
+      hour,
     });
   }
 
-  async updateAppointment(id, date, time, status, userId, therapistId) {
+  async updateAppointment(id, date, hour) {
     return await Appointment.update(
       {
         date,
-        time,
-        status,
-        userId,
-        therapistId,
+        hour,
       },
       {
         where: {
@@ -41,4 +35,4 @@ class AppointmentService {
   }
 }
 
-export { AppointmentService }
+export { AppointmentService };

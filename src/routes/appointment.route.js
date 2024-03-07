@@ -4,9 +4,9 @@ import { AppointmentController } from '../controller/appointment.controller.js';
 const appointmentRouter = Router();
 const appointmentController = new AppointmentController();
 
-appointmentRouter.post('/create', appointmentController.createAppointment);
-appointmentRouter.get('/list', appointmentController.listAppointments);
-appointmentRouter.put('/update/:id', appointmentController.updateAppointment);
-appointmentRouter.delete('/delete/:id', appointmentController.deleteAppointment);
+appointmentRouter.post('/', appointmentController.createAppointment);
+appointmentRouter.get('/', appointmentController.listAppointments);
+appointmentRouter.put('/:id', appointmentController.updateAppointment);
+appointmentRouter.delete('/:id', appointmentController.deleteAppointment);
 
 export { appointmentRouter };

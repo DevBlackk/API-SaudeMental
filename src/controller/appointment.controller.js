@@ -7,10 +7,10 @@ class AppointmentController extends AppointmentService {
 
   async createAppointment(req, res) {
     try {
-      const { date, time, status, userId, therapistId } = req.body;
+      const { date, hour, } = req.body;
       res.status(201).json({
         message: 'Appointment created successfully',
-        results: await super.createAppointment(date, time, status, userId, therapistId),
+        results: await super.createAppointment(date, hour),
         error: false,
       });
     } catch (error) {
@@ -32,9 +32,9 @@ class AppointmentController extends AppointmentService {
   async updateAppointment(req, res) {
     try {
       const id = req.params.id;
-      const { date, time, status, userId, therapistId } = req.body;
+      const { date, hour } = req.body;
 
-      const [updatedRowsCount] = await super.updateAppointment(id, date, time, status, userId, therapistId);
+      const [updatedRowsCount] = await super.updateAppointment(id, date, hour);
 
       if (updatedRowsCount === 0) {
         throw new Error('Appointment not found');

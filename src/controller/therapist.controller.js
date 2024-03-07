@@ -46,7 +46,7 @@ class TherapistController extends TherapistService {
       const id = req.params.id;
       const { name, phone, licenseNumber, medicalSpecialty } = req.body;
 
-      const [updatedRowsCount] = await super.updateTherapist(
+      await super.updateTherapist(
         id,
         name, 
         phone,

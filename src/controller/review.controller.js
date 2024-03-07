@@ -7,10 +7,10 @@ class ReviewController extends ReviewService {
 
   async createReview(req, res) {
     try {
-      const { rating, comment, userId, therapistId } = req.body;
+      const { rating, comment } = req.body;
       res.status(201).json({
         message: 'Review created successfully',
-        results: await super.createReview(rating, comment, userId, therapistId),
+        results: await super.createReview(rating, comment),
         error: false,
       });
     } catch (error) {
@@ -32,9 +32,9 @@ class ReviewController extends ReviewService {
   async updateReview(req, res) {
     try {
       const id = req.params.id;
-      const { rating, comment, userId, therapistId } = req.body;
+      const { rating, comment } = req.body;
 
-      const [updatedRowsCount] = await super.updateReview(id, rating, comment, userId, therapistId);
+      const [updatedRowsCount] = await super.updateReview(id, rating, comment);
 
       if (updatedRowsCount === 0) {
         throw new Error('Review not found');

@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/connection.js";
-import { User } from "./User.entity.js"
 
 const Appointment = sequelize.define("Appointment", {
   id: {
@@ -21,34 +20,34 @@ const Appointment = sequelize.define("Appointment", {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Clients', 
-      key: 'id' 
-    }
+      model: "Clients",
+      key: "id",
+    },
   },
   therapistId: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Therapists', 
-      key: 'id' 
-    }
+      model: "Therapists",
+      key: "id",
+    },
   },
   waitingListId: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'WaitingLists', 
-      key: 'id' 
-    }
+      model: "WaitingLists",
+      key: "id",
+    },
   },
 
   createdAt: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: false,
   },
   updatedAt: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: false,
   },
 });
 

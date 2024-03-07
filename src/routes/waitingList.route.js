@@ -7,14 +7,12 @@ const waitingList = new WaitingListController();
 
 
 
-waitingListRoutes.post('/', waitingList.addToWaitingList);
+waitingListRoutes.post('/', waitingList.createWaitingList);
 
-waitingListRoutes.get('/', waitingList.listWaitingList);
-
-waitingListRoutes.get('/:id', waitingList.getWaitingListById);
+waitingListRoutes.get('/', waitingList.listUser);
 
 waitingListRoutes.put('/:id', waitingList.updateWaitingList);
 
-waitingListRoutes.delete('/:id', waitingList.removeFromWaitingList);
+waitingListRoutes.delete('/:id', waitingList.deleteWaitingList);
 
 export { waitingListRoutes };

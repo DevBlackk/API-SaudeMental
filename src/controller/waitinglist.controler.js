@@ -5,85 +5,66 @@ class WaitingListController extends WaitingListService {
     super();
   }
 
-  async addToWaitingList(request, response) {
+  async createWaitingList(req, res) {
     try {
-      const { userId, therapistId, reason } = request.body;
-      const newItem = await super.addToWaitingList(userId, therapistId, reason);
-      response.status(201).json({
-        message: "User added to waiting list successfully",
-        results: [newItem],
+      const { status } = req.body;
+
+      res.status(201).json({
+        message: "User on the waiting list",
+        results: await super.createWaitingList(status),
         error: false,
       });
     } catch (error) {
-      response.status(401).json({
+      res.status(401).json({
         message: error.message,
         error: true,
       });
     }
   }
 
-  async listWaitingList(request, response) {
+  async listUser(req, res) {
     try {
-      const waitingList = await super.listWaitingList();
-      response.status(200).json({
-        results: waitingList,
+      res.status(201).json({
+        results: await super.getAllWaitingUsers(),
         error: false,
       });
     } catch (error) {
-      response.status(401).json({
+      res.status(401).json({
         message: error.message,
         error: true,
       });
     }
   }
 
-  async getWaitingListById(request, response) {
+  async updateWaitingList(req, res) {
     try {
-      const { id } = request.params.id;
-      const waitingListItem = await super.getWaitingListById({
-        where: {
-          id,
-        },
-      });
-      response.status(200).json({
-        results: waitingListItem,
-        error: false,
-      });
-    } catch (error) {
-      response.status(401).json({
-        message: error.message,
-        error: true,
-      });
-    }
-  }
+      const id = req.params.id;
+      const { status } = req.body;
 
-  async updateWaitingList(request, response) {
-    try {
-      const { id } = request.params.id;
-      const { status } = request.body;
-      response.status(200).json({
-        message: "Waiting list item updated successfully",
+      res.status(201).json({
+        message: "Updated waiting list",
         results: await super.updateWaitingList(id, status),
         error: false,
       });
     } catch (error) {
-      response.status(401).json({
-        message: error.message,
+      res.status(401).json({
+        message: message.error,
         error: true,
       });
     }
   }
 
-  async removeFromWaitingList(request, response) {
+  async deleteWaitingList(req, res) {
     try {
-      const { id } = request.params.id;
-      response.status(200).json({
-        message: "Waiting list item removed successfully",
-        results: await super.removeFromWaitingList(id),
+      const id = req.params.id;
+      console.log(id)
+      res.status(200).json({
+        message: "Waiting delete successfully",
+        results: await super.deleteWaitingList(id),
         error: false,
       });
     } catch (error) {
-      response.status(401).json({
+      res.status(401).json({
         message: error.message,
         error: true,
       });

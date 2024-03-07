@@ -12,6 +12,7 @@ import {
 import dotenv from "dotenv";
 import { clientRouter } from "./routes/client.route.js";
 import { waitingListRoutes } from "./routes/waitingList.route.js";
+import { paymentRoute } from "./routes/payment.route2.js";
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use("/therapists", therapistRouter);
 app.use("/appointments", appointmentRouter);
 app.use("/reviews", reviewRouter);
 app.use("/waitingList", waitingListRoutes)
+app.use("/payment", paymentRoute)
 app.use(syncDb);
 
 app.listen(port, () => {

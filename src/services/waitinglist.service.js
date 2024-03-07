@@ -1,23 +1,14 @@
 import { WaitingList } from "../entity/WaitingList.entity.js";
 
 class WaitingListService {
-  async addToWaitingList(therapistId, reason) {
+  async createWaitingList(status) {
     return await WaitingList.create({
-      therapistId: therapistId,
-      reason: reason,
+      status,
     });
   }
 
-  async listWaitingList() {
+  async getAllWaitingUsers() {
     return await WaitingList.findAll();
-  }
-
-  async getWaitingListById(id) {
-    return await WaitingList.findByPk({
-      where: {
-        id,
-      },
-    });
   }
 
   async updateWaitingList(id, status) {
@@ -33,12 +24,12 @@ class WaitingListService {
     );
   }
 
-  async removeFromWaitingList(id) {
+  async deleteWaitingList(id) {
     return await WaitingList.destroy({
       where: {
-        id,
-      },
-    });
+        id: id
+      }
+    })
   }
 }
 

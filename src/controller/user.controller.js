@@ -62,7 +62,6 @@ class UserController extends UserService {
   async updateUser(request, response) {
     try {
       const id = request.params.id;
-      console.log(id)
       const { username, password,  } = request.body;
       const hashedPassword = await bcrypt.hash(password, 10);
       const oldUser = await super.oldUser(id);
@@ -82,7 +81,7 @@ class UserController extends UserService {
 
   async deleteUser(request, response) {
     try {
-      const { id } = request.params;
+      const { id } = request.params.id;
       response.status(200).json({
         message: "User delete successfully",
         results: await super.deleteUser(id),
